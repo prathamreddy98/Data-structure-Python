@@ -8,6 +8,8 @@ class BST:
         if self.key is None:#root is empty
             self.key=data
             return 
+        if self.key==data:
+            return #Handling duplicate values
         if data<self.key:
             if self.lchild: # if there is already left child then this condition is true and we need to recusrsively call insert method
                 self.lchild.insert(data)
