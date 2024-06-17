@@ -29,19 +29,35 @@ class BST:
             if self.lchild:
                 self.lchild.search(data)
             else:
-                print("Node not found")
+                print("Node not found in left subtree")
         else:
             if self.rchild: # if rchild is present recursively search in right sub tree
                 self.rchild.search(data)
             else:
-                print("Not found")
-            
+                print("Not found in right subtree")
+
+    def preorder(self):
+        print(self.key)
+        if self.lchild: #if left subtree is present again call preorder
+            self.lchild.preorder()
+        if self.rchild:# same for right subtree
+            self.rchild.preorder()
+
+    def inorder(self):
+        if self.lchild: #if left subtree in present call it recursively
+            self.lchild.inorder()
+        print(self.key) # visit root node
+        if self.rchild:
+            self.rchild.inorder() # visit right subtree
 
 
 
+           
 
         
 root=BST(10)
-list1=[20,4,30,4,1,5,6,1]
+list1=[6,3,1,6,98,3,7]
+
 for i in list1:
     root.insert(i)
+root.inorder()
