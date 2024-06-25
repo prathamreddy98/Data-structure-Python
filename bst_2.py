@@ -10,7 +10,7 @@ class BST:
             return 
         if self.key==data:
             return #Handling duplicate values
-        if data<self.key:
+        if data<self.key :
             if self.lchild: # if there is already left child then this condition is true and we need to recusrsively call insert method if self.child is equivalent to if self.child is Falsw
                 self.lchild.insert(data)
             else:
@@ -50,9 +50,42 @@ class BST:
         if self.rchild:
             self.rchild.inorder() # visit right subtree
 
+    def delete(self,data):
+        if self.key is None: #tree is empty
+            print("tree is empty")
+            return # Once python encounters a return it exits the condition 
+        if data<self.key:
+            if self.lchild: #check if lchild exists
+                 self.lchild=self.lchild.delete(data) #Need to store in lchild since if we delete node then tree has to be updated to point to None 
+            else:
+                print("Node not present in Left subtree")
+        elif data>self.key: #iterating in right subtree
+            if self.rchild:
+                self.rchild=self.rchild.delete(data)
+            else:
+                print("not Found")
+        else: #Since both of above conditions were false it means the node we want to delete is the root node
+            #These if conditions will handle the case where the node to be deleted has 0 or 1 child
+            if self.lchild is None:
+                temp=self.rchild
+                self=None
+                return temp
+            if self.rchild is None:
+                temp=self.lchild
+                self=None
+                return temp
+            #To delete node having 2 children
+            node=self.rchild # Replacing with minimum from right subtree
+            while node.lchild: # Since smallest value will be in the left part of right sub tree
+                node=node.lchild
+            self.key=node.key # Replaces the value with min from right subtree
+            self.rchild=self.rchild.delete(node.key)#After replacing the value we delete the node
+        return self
+      
 
 
-           
+
+
 
         
 root=BST(10)
@@ -60,4 +93,6 @@ list1=[6,3,1,6,98,3,7]
 
 for i in list1:
     root.insert(i)
-root.inorder()
+
+root.preorder()
+root.delete(6)
