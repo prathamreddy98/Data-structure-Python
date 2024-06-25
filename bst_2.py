@@ -50,28 +50,41 @@ class BST:
         if self.rchild:
             self.rchild.inorder() # visit right subtree
 
-    def delete(self,data):
+
+    def delete(self,data, curr):# curr is root.key. we passed this to delete the root node 
         if self.key is None: #tree is empty
             print("tree is empty")
             return # Once python encounters a return it exits the condition 
         if data<self.key:
             if self.lchild: #check if lchild exists
-                 self.lchild=self.lchild.delete(data) #Need to store in lchild since if we delete node then tree has to be updated to point to None 
+                 self.lchild=self.lchild.delete(data,curr) #Need to store in lchild since if we delete node then tree has to be updated to point to None 
             else:
                 print("Node not present in Left subtree")
         elif data>self.key: #iterating in right subtree
             if self.rchild:
-                self.rchild=self.rchild.delete(data)
+                self.rchild=self.rchild.delete(data,curr)
             else:
                 print("not Found")
         else: #Since both of above conditions were false it means the node we want to delete is the root node
             #These if conditions will handle the case where the node to be deleted has 0 or 1 child
             if self.lchild is None:
                 temp=self.rchild
+                if data ==curr: # to handle case when we have to delete a root node
+                    self.key=temp.key
+                    self.lchild=temp.lchild # since a root node is to be deleted, we have to make it's L and R pointers none. Since lchild is not there, we replace it with rchild
+                    self.rchild=temp.rchild
+                    temp=None
+                    return 
                 self=None
                 return temp
             if self.rchild is None:
                 temp=self.lchild
+                if data==curr:
+                    self.key=temp.key
+                    self.lchild=temp.lchild
+                    self.rchild=temp.rchild
+                    temp=None
+                    return
                 self=None
                 return temp
             #To delete node having 2 children
@@ -79,20 +92,27 @@ class BST:
             while node.lchild: # Since smallest value will be in the left part of right sub tree
                 node=node.lchild
             self.key=node.key # Replaces the value with min from right subtree
-            self.rchild=self.rchild.delete(node.key)#After replacing the value we delete the node
+            self.rchild=self.rchild.delete(node.key,curr)#After replacing the value we delete the node
         return self
       
-
-
+def count(node):
+    if node is None:
+        return 0
+    return 1 + count(node.lchild) +count(node.rchild)
 
 
 
         
 root=BST(10)
-list1=[6,3,1,6,98,3,7]
+list1=[1,12]
 
 for i in list1:
     root.insert(i)
-
 root.preorder()
-root.delete(6)
+print()
+if count(root)>1:
+    root.delete(10,root.key)
+else:
+    print("cannot delete")
+print("After deleting: ")
+root.preorder()
