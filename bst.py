@@ -77,6 +77,11 @@ class BinarySearchTreeNode:
             self.data=max_val
             self.left=self.left.delete(max_val)
         return self
+    
+  
+
+
+
 
 
                     

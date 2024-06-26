@@ -94,6 +94,20 @@ class BST:
             self.key=node.key # Replaces the value with min from right subtree
             self.rchild=self.rchild.delete(node.key,curr)#After replacing the value we delete the node
         return self
+    
+    def min_node(self): #self here means the root
+        current=self # var pointing to root node
+        while current.lchild:
+            current=current.lchild
+        print("Smallest key is ", current.key)
+
+    def max_node(self):
+        current=self
+        while current.rchild:
+            current=current.rchild
+        print("Max key is  ", current.key)
+
+        
       
 def count(node):
     if node is None:
@@ -104,15 +118,17 @@ def count(node):
 
         
 root=BST(10)
-list1=[1,12]
+list1=[6,3,1,6,98,3,7]
 
 for i in list1:
     root.insert(i)
 root.preorder()
 print()
-if count(root)>1:
-    root.delete(10,root.key)
-else:
-    print("cannot delete")
-print("After deleting: ")
-root.preorder()
+root.min_node()
+root.max_node()
+# if count(root)>1:
+#     root.delete(10,root.key)
+# else:
+#     print("cannot delete")
+# print("After deleting: ")
+# root.preorder()
